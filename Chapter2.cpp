@@ -8,24 +8,29 @@ using namespace cv;
 using namespace std;
 
 
-/////////////   Images    ///////////////
+/////////////   Basic Functions    ///////////////
 
 void main() {
 	string path = "Resources/test.png";
 
 	// Mat is Matrix data type
 	Mat img = imread(path);
-	Mat imgGray, imgBlur, imgCanny;
+	Mat imgGray, imgBlur, imgCanny, imgDil, imgErode;
 
 	cvtColor(img, imgGray, COLOR_BGR2GRAY);
 	GaussianBlur(img, imgBlur, Size(3, 3), 3, 0);
 	Canny(imgBlur, imgCanny, 75, 75);
 
+	Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
+	dilate(imgCanny, imgDil, kernel);
+	erode(imgDil, imgErode, kernel);
 
 	imshow("Image", img);
 	imshow("Image Gray", imgGray);
 	imshow("Image Blur", imgBlur);
 	imshow("Image Canny", imgCanny);
+	imshow("Image Dilation", imgDil);
+	imshow("Image Erode", imgErode);
 	
 	// 0 for infinity
 	waitKey(0);
