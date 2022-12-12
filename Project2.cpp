@@ -9,8 +9,10 @@ using namespace std;
 
 /////////////   Images    ///////////////
 
-Mat imgOriginal, imgGray, imgBlur, imgCanny, imgThre, imgDil, imgErode;
+Mat imgOriginal, imgGray, imgBlur, imgCanny, imgThre, imgDil, imgErode, imgWarp, imgCrop;
 vector<Point> initialPoints, docPoints;
+
+float w = 420, h = 596;
 
 Mat preProcessing(Mat img)
 {
@@ -54,7 +56,7 @@ vector<Point> getContours(Mat imgDil) {
 
 			if (area > maxArea && conPoly[i].size() == 4) {
 
-				drawContours(imgOriginal, conPoly, i, Scalar(255, 0, 255), 5);
+				//drawContours(imgOriginal, conPoly, i, Scalar(255, 0, 255), 5);
 				
 				biggest = { conPoly[i][0],conPoly[i][1], conPoly[i][2], conPoly[i][3] };
 				maxArea = area;
@@ -79,6 +81,7 @@ void drawPoints(vector<Point> points, Scalar color)
 
 vector<Point> reorder(vector<Point> points)
 {
+	// 꼭지점의 순서 리오더
 	vector<Point> newPoints;
 	vector<int> sumPoints, subPoints;
 	
@@ -90,11 +93,22 @@ vector<Point> reorder(vector<Point> points)
 	}
 
 	newPoints.push_back(points[min_element(sumPoints.begin(), sumPoints.end()) - sumPoints.begin()]); //0
-	newPoints.push_back(points[max_element(subPoints.begin(), subPoints.end()) - subPoints.begin()]); //2
+	newPoints.push_back(points[max_element(subPoints.begin(), subPoints.end()) - subPoints.begin()]); //1
 	newPoints.push_back(points[min_element(subPoints.begin(), subPoints.end()) - subPoints.begin()]); //2
 	newPoints.push_back(points[max_element(sumPoints.begin(), sumPoints.end()) - sumPoints.begin()]); //3
 
 	return newPoints;
+}
+
+Mat getWarp(Mat img, vector<Point> points, float w, float h)
+{
+	Point2f src[4] = { points[0], points[1], points[2], points[3] };
+	Point2f dst[4] = { { 0.0f,0.0f },{ w,0.0f },{ 0.0f,h },{ w,h } };
+
+	Mat matrix = getPerspectiveTransform(src, dst);
+	warpPerspective(img, imgWarp, matrix, Point(w, h));
+
+	return imgWarp;
 }
 
 void main() {
@@ -108,10 +122,18 @@ void main() {
 	initialPoints = getContours(imgThre);
 	//drawPoints(initialPoints, Scalar(0, 0, 255));
 	docPoints = reorder(initialPoints);
-	drawPoints(docPoints, Scalar(0, 255, 0));
+	//drawPoints(docPoints, Scalar(0, 255, 0));
 	// Warp
+	imgWarp = getWarp(imgOriginal, docPoints, w, h);
+
+	//Crop
+	int cropVal = 10;
+	Rect roi(cropVal, cropVal, w - (2 * cropVal), h - (2 * cropVal));
+	imgCrop = imgWarp(roi);
 
 	imshow("Image", imgOriginal);
 	imshow("Image Dilation", imgThre);
+	imshow("Image Warp", imgWarp);
+	imshow("Image Crop", imgCrop);
 	waitKey(0);
 }
