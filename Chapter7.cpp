@@ -16,6 +16,8 @@ void getContours(Mat imgDil, Mat img) {
 	vector<vector<Point>> contours;
 	vector<Vec4i> hierarchy;
 
+	vector<vector<Point>> conPoly(contours.size());
+	vector<Rect> boundRect(contours.size());
 	findContours(imgDil, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 	// drawContours(img, contours, -1, Scalar(255, 0, 255), 2);
 
@@ -24,8 +26,7 @@ void getContours(Mat imgDil, Mat img) {
 		int area = contourArea(contours[i]);
 		cout << area << endl;
 	
-		vector<vector<Point>> conPoly(contours.size());
-		vector<Rect> boundRect(contours.size());
+
 		string objectType;
 		
 		// exclusive noise
