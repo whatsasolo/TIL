@@ -18,6 +18,28 @@ namespace ConsoleApp1
             GiftBox addressA = GiftBoxMaker("A 하이", 100000);
             GiftBox addressB = GiftBoxMaker("B 하이", 110000);
             GiftBox addressC = GiftBoxMaker("C 하이", 120000);
+
+            GiftBox[] giftBoxes = new GiftBox[3];
+            giftBoxes[0] = addressA;
+            giftBoxes[1] = addressB;
+            giftBoxes[2] = addressC;
+
+            // 배열
+            GiftBox[] giftBoxes2 = {addressA, addressB, addressC };
+            Console.WriteLine(giftBoxes2.Length);
+
+            // 리스트
+            List<GiftBox> giftBoxList = new List<GiftBox>();
+            giftBoxList.Add(addressA);
+            giftBoxList.Add(addressB);
+            giftBoxList.Add(addressC);
+            // 리스트 길이는 카운트 
+            Console.WriteLine(giftBoxList.Count);
+            // 리스트는 컬렉션 중 하나
+
+            // giftBoxList.Clear();  // 모두 지움
+            // 특정 값 지우기
+            giftBoxList.Remove(addressA);
         }
 
         private static GiftBox GiftBoxMaker(string letter, int money)
