@@ -7,6 +7,7 @@ namespace ConsoleApp1
     // 1. 정리하기 위해, 2. 반복을 단순화
     class GiftBox
     {
+        // nullable 가능함
         public string? Letter = null;
         public int Money;
     }
