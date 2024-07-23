@@ -36,7 +36,7 @@ namespace ConsoleApp1
 
 
             double value = 30.0 + 10.1f;
-            // float value2 = 30.0 + 10.1f; // 에러 더블 + 플롯 = 더블 <- 자료형이 큰 것으로 연산 결과가 됨
+            // float value2 = 30.0 + 10.1f; // 에러, 더블 + 플롯 = 더블 <- 자료형이 큰 것으로 연산 결과가 됨
         }
     }
 }
