@@ -51,6 +51,21 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(giftBoxList[i].Money);
             }
+
+            // foreach
+
+            foreach (GiftBox item in giftBoxList)
+            {
+                item.Money = 0;
+            }
+
+            // var을 쓰면 추론형식임
+            // var money = 1; <- int로 인식함
+            //foreach (var item in giftBoxList)
+            //{
+            //    item.Money = 0;
+            //}
+
         }
 
         private static GiftBox GiftBoxMaker(string letter, int money)
