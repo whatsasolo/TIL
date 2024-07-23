@@ -40,7 +40,17 @@ namespace ConsoleApp1
 
             // giftBoxList.Clear();  // 모두 지움
             // 특정 값 지우기
-            giftBoxList.Remove(addressA);
+            // giftBoxList.Remove(addressA);
+
+            for (int i = 0; i < giftBoxes.Length; i++)
+            {
+                Console.WriteLine(giftBoxes[i].Money);
+            }
+
+            for (int i = 0; i < giftBoxList.Count; i++)
+            {
+                Console.WriteLine(giftBoxList[i].Money);
+            }
         }
 
         private static GiftBox GiftBoxMaker(string letter, int money)
