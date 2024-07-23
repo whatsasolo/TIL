@@ -7,9 +7,19 @@ namespace ConsoleApp1
     // 1. 정리하기 위해, 2. 반복을 단순화
     class GiftBox
     {
-        // nullable 가능함
-        public string? Letter = null;
-        public int Money;
+        public char CharLetter = '\0';
+        public string? Letter = null; // nullable 가능함
+
+        public int Money; // 4byte
+        public long LongMoney = 10000000000; // 8byte
+
+        public float FloatMoney = 10000.0f; // 4byte
+        public double DoubleMoney = 100000000.0; // 8byte // 끝에 d 또는 생략해야함
+        // 실수형 float와 double 중 float는 문제를 일으키는 경우가 많음
+        // double 권장
+        // 보통 서버에 보낼때 숫자에 값을 곱해서 소수점을 지움.
+        // 물론 서버와 클라이언트가 미리 맞춰야함
+
     }
     internal class Program
     {
