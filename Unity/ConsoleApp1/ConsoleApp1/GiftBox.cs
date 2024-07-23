@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using static ConsoleApp1.Program
+using static ConsoleApp1.Program;
 
 namespace GiftBoxNamespace
 {
